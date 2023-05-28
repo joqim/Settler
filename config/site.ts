@@ -1,14 +1,11 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Next.js",
+  name: "Settler",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "Settler for Poker. Built using Passage, Firebase and Splitwise API.",
   mainNav: [
-    {
-      title: "Home",
-      href: "/",
-    },
+
   ],
   links: {
     twitter: "https://twitter.com/shadcn",
