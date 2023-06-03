@@ -55,7 +55,7 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
   })
 
   const [playerCount, setPlayerCount] = useState([2]); // Initial player count value
-  const [buyIn, setBuyIn] = useState(0); // Initial buy-in value
+  const [buyIn, setBuyIn] = useState(); // Initial buy-in value
 
   const handleBuyInChange = (event: any) => {
     setBuyIn(event.target.value);
@@ -90,7 +90,7 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
                     />
                     </FormControl>
                     <FormDescription>
-                      Total number of players.
+                      Total number of players ({playerCount}).
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -102,14 +102,14 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
                 render={({ field }) => (
                   <FormItem className="ml-14">
                     <FormLabel>Buy-in</FormLabel>
-                    <FormControl className="w-[200px] p-4 relative">
+                    <FormControl className="relative w-[200px] p-4">
                       <DollarInput 
                         type="number"
                         min="0"
                         placeholder="Buy-in amount"
                         value={buyIn}
                         onChange={handleBuyInChange}
-                        className="appearance-none no-spin pl-8"  
+                        className="no-spin appearance-none pl-8"  
                       />
                     </FormControl>
                     <FormDescription>

@@ -53,7 +53,7 @@ export function GroupDialog({ onSaveChanges }: GroupDialogProps) {
       setLoading(true);
       const response = await fetch('/api/groups');
       const groupsData = await response.json();
-      console.log("groups data", groupsData)
+      //console.log("groups data", groupsData)
 
       preparedGroups = groupsData.map((group: {
         name: string,
@@ -68,7 +68,7 @@ export function GroupDialog({ onSaveChanges }: GroupDialogProps) {
       setGroups(preparedGroups);
       setLoading(false);
 
-      console.log("preparedGroups", preparedGroups); // Process the data as needed
+      //console.log("preparedGroups", preparedGroups); // Process the data as needed
     } catch (error) {
       console.error('Error fetching data:', error);
     }

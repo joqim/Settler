@@ -85,7 +85,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
   const watchValues = form.watch();
 
   const getIdentifier = (playerName: string) => {
-    console.log("playerName in getIdentifier", playerName)
+    //console.log("playerName in getIdentifier", playerName)
     const matchingMember = preparedMembersArray.find((item) => item.value === playerName);
     return matchingMember ? matchingMember.identifier : '';
   };
@@ -121,8 +121,8 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
 
   useEffect(() => {
     // Update the values when the form values change
-    console.log("val", watchValues);
-    console.log("preparedMembersArray", preparedMembersArray)
+    // console.log("val", watchValues);
+    // console.log("preparedMembersArray", preparedMembersArray)
     // Retrieve existing player array from local storage
     const existingArray = JSON.parse(localStorage.getItem('players') || '[]');
 
@@ -149,7 +149,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
     // Update the player array in local storage
     localStorage.setItem('players', JSON.stringify(existingArray));
 
-    console.log("localstor", localStorage.getItem('players'));
+    //console.log("localStorage", localStorage.getItem('players'));
   }, [watchValues, preparedMembersArray]);
 
   return (

@@ -4,28 +4,33 @@ import "../styles/globals.css"
 import { DotWave } from '@uiball/loaders'
 import PassageLogin from "@/components/login";
 import React, { useEffect, useState } from 'react';
+import { useTheme } from 'next-themes';
 
 export default function LoginPage() {
   const [authenticated, setAuthenticationStatus] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const { setTheme, theme } = useTheme();
+  if(theme==='system') setTheme('dark');
+  const dotWaveColor = theme === 'dark' ? '#FFFFFF' : '#000000';
 
   async function passageAuthentication() {
     try {
       const response = await fetch('/api/auth');
       const data = await response.json();
 
-      console.log("data", data);
+      //console.log("data", data);
       const { isAuthorized, appID } = data;
 
       // Handle the response accordingly
       if (isAuthorized) {
         // User is authorized
-        console.log('User is authorized with appID:', appID);
+        //console.log('User is authorized with appID:', appID);
         setAuthenticationStatus(true);
         window.location.href = '/dashboard'; // Route to /dashboard
       } else {
         // User is not authorized
-        console.log('User is not authorized with appID:', appID);
+        //console.log('User is not authorized with appID:', appID);
         setAuthenticationStatus(false);
       }
     } catch (error) {
@@ -54,14 +59,12 @@ export default function LoginPage() {
 
   return (
     <>
-      {!authenticated ? 
-        <PassageLogin/>
-       : null}
       {loading && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-          {loading && <DotWave />}
+          {loading && <DotWave color='white'/>}
         </div>
       )}
+      {<PassageLogin/>}
     </>
   )
 }

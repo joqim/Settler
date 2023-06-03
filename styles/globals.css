@@ -103,3 +103,13 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+.darkMode passage-auth {
+  --passage-primary-color: white;
+  --passage-onprimary-color: #080414;
+  --passage-body-text-color: white;
+  --passage-header-text-color: white;
+  --passage-error-color: #ff3131;
+  --passage-container-background-color: #080414;
+  --passage-container-background: #080414;
+}

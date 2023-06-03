@@ -4,10 +4,10 @@ import Passage from '@passageidentity/passage-node';
 export default async function authAPI(req: NextApiRequest, res: NextApiResponse) {
     const appID = process.env.PASSAGE_APP_ID as string;
     const passage = new Passage({
-            appID,
-            apiKey: process.env.PASSAGE_API_KEY,
-            authStrategy: "HEADER",
-        });
+      appID,
+      apiKey: process.env.PASSAGE_API_KEY,
+      authStrategy: "HEADER",
+    });
       try {
         const authToken = req.cookies['psg_auth_token'];
         const request = {

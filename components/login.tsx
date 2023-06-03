@@ -1,16 +1,29 @@
-// components/login.tsx
 import { useEffect } from 'react';
-import "../styles/globals.css"
+import { useTheme } from 'next-themes';
+import '../styles/globals.css';
 
 const PassageLogin = () => {
+  const { setTheme, theme } = useTheme();
+
   useEffect(() => {
     require('@passageidentity/passage-elements/passage-auth');
   }, []);
 
+  useEffect(() => {
+    const passageAuthElement = document.querySelector('div');
+    if (passageAuthElement) {
+      if (theme === 'dark') {
+        passageAuthElement.classList.add('darkMode');
+      } else {
+        passageAuthElement.classList.remove('darkMode');
+      }
+    }
+  }, [theme]);
+
   return (
-    <>
-      <passage-auth app-id={process.env.PASSAGE_APP_ID} ></passage-auth>
-    </>
+    <div>
+      <passage-auth app-id={process.env.PASSAGE_APP_ID}></passage-auth>
+    </div>
   );
 };
 
