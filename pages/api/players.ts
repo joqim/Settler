@@ -3,7 +3,7 @@ import Splitwise from 'splitwise';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    console.log('inside players API', req.query);
+    //console.log('inside players API', req.query);
     let groupId = '';
     if (Array.isArray(req.query.groupId)) {
       groupId = req.query.groupId[0];

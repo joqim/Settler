@@ -64,7 +64,7 @@ export default function LoginPage() {
           {loading && <DotWave color='white'/>}
         </div>
       )}
-      {<PassageLogin/>}
+      {!authenticated && <PassageLogin/>}
     </>
   )
 }

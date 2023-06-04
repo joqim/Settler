@@ -18,6 +18,7 @@ export default function DashboardPage() {
   const [membersofSelectedGroup, setMembersforSelectedGroup] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState("");
+  const [splitwiseButtonDisabled, setSplitwiseButtonDisabled] = useState(false);
 
   const { setTheme, theme } = useTheme();
   if(theme==='system') setTheme('dark');
@@ -26,13 +27,13 @@ export default function DashboardPage() {
 
   // Function to fetch data from the API endpoint
   const fetchData = async (selectedId: string) => {
-    console.log("inside fetch data for ", selectedId)
+    //console.log("inside fetch data for ", selectedId)
     try {
       if(selectedId) {
         const params = { groupId: selectedId }
         const response = await fetch(`/api/players?${new URLSearchParams(params)}`);
         const data = await response.json();
-        console.log("members", data); // Process the data as needed
+        //console.log("members", data); // Process the data as needed
         setMembersforSelectedGroup(data);
       }
     } catch (error) {
@@ -45,17 +46,17 @@ export default function DashboardPage() {
       const response = await fetch('/api/auth');
       const data = await response.json();
 
-      console.log("data", data)
+      //console.log("data", data)
       const { isAuthorized, appID, username } = data;
   
       // Handle the response accordingly
       if (isAuthorized) {
         // User is authorized
-        console.log('User is authorized with appID:', appID);
+        //console.log('User is authorized with appID:', appID);
         setUserName(username);
       } else {
         // User is not authorized
-        console.log('User is not authorized with appID:', appID);
+        //console.log('User is not authorized with appID:', appID);
         window.location.href = '/';
       }
     } catch (error) {
@@ -124,17 +125,18 @@ export default function DashboardPage() {
   };
 
   const handleSaveChanges = (group: string, id: string) => {
-    console.log("inside handle save changes in page")
+    //console.log("inside handle save changes in page")
     setSelectedGroup(group);
     setSelectedGroupId(id);
 
-    console.log("group id before fetch id", selectedGroupId);
+    //console.log("group id before fetch id", selectedGroupId);
     fetchData(id);
   };
 
   const { toast } = useToast();
 
   const handleUpdateSplitwise = async () => {
+    setSplitwiseButtonDisabled(true);
     let localStorageString = localStorage.getItem('players');
     let players;
 
@@ -149,14 +151,14 @@ export default function DashboardPage() {
     let totalMoneyPaid = 0;
 
     for(let member of players) {
-      console.log("member", member)
+      //console.log("member", member)
       let totalBuyInAmount = buyIn;
       let numberOfBuyIns = member.buyin;
       let totalChipValue = numberOfBuyIns*1000;
   
       let chipsWalkedAwayWith = member.chips - totalChipValue;
       let totalMoneyWalkedAwayWith = parseFloat(((chipsWalkedAwayWith/1000)*totalBuyInAmount).toFixed(2));
-      console.log("totalMoneyWalkedAwayWith", totalMoneyWalkedAwayWith);
+      //console.log("totalMoneyWalkedAwayWith", totalMoneyWalkedAwayWith);
 
       interface MemberObject {
         name: string;
@@ -171,12 +173,12 @@ export default function DashboardPage() {
       };
       
       preparedMembersArray.push(memberObject);
-      console.log("prep mem array", preparedMembersArray)
+      //console.log("prep mem array", preparedMembersArray)
       
 
       if(totalMoneyWalkedAwayWith > 0) {
         totalMoneyPaid += totalMoneyWalkedAwayWith;
-        console.log("totalMoneyPaid", totalMoneyPaid)
+        //console.log("totalMoneyPaid", totalMoneyPaid)
       }
     }
 
@@ -190,7 +192,7 @@ export default function DashboardPage() {
     const url = `/api/splitwise?${queryString}`;
     
     const response = await fetch(url);   
-    console.log("response from python server1", response) 
+    //console.log("response from python server1", response) 
 
     const currentDate = new Date();
 
@@ -206,12 +208,12 @@ export default function DashboardPage() {
     const formattedDate = new Intl.DateTimeFormat("en-US", options).format(currentDate);
 
     if (response.status === 200) {
-      console.log("response status is 200");
-
+      //console.log("response status is 200");
       toast({
         title: "Splitwise activity updated successfully",
         description: formattedDate
       });
+      setSplitwiseButtonDisabled(false);
     }
 
     //float notification success
@@ -223,6 +225,7 @@ export default function DashboardPage() {
           <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
         )
       })
+      setSplitwiseButtonDisabled(false);
     } //float notification error
     localStorage.clear();
   }
@@ -289,7 +292,7 @@ export default function DashboardPage() {
 
         <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
           {renderAccountForms()}
-          <Button className="w-40" onClick={handleUpdateSplitwise}>Update Splitwise</Button>
+          <Button className="w-40" onClick={handleUpdateSplitwise} disabled={splitwiseButtonDisabled}>Update Splitwise</Button>
         </section>
         </>
       )}

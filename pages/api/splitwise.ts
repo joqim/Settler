@@ -25,23 +25,30 @@ export default async function splitWiseExpenseUpdate(req: NextApiRequest, res: N
         console.log("players array", playersArray)
 
         let totalMoneyPaid = req.query.totalMoneyPaid;
+        
+        const SPLITWISE_API_CLIENT = "https://splitwise-api-pi.vercel.app";
+        //const SPLITWISE_API_CLIENT = "http://127.0.0.1:5000";
+        try {
+            const payload = {
+                group_id: req.query.groupId,
+                players: playersArray,
+                total_paid: totalMoneyPaid,
+                CONSUMER_KEY: CONSUMER_KEY,
+                CONSUMER_SECRET: CONSUMER_SECRET,
+                API_KEY: process.env.SPLITWISE_API_KEY
+            };
+            const response = await axios.get(`${SPLITWISE_API_CLIENT}/`, {
+                params: payload
+            });
 
-        const payload = {
-            group_id: req.query.groupId,
-            players: playersArray,
-            total_paid: totalMoneyPaid,
-            CONSUMER_KEY: CONSUMER_KEY,
-            CONSUMER_SECRET: CONSUMER_SECRET,
-            API_KEY: process.env.SPLITWISE_API_KEY
-        }
-
-        let response = await axios.post("http://127.0.0.1:5000/update", payload)
-        console.log("resp from python server", response.status)
-
-        if (response.status === 200) {
-            return res.status(200).json({ message: "success" });
-        } else {
-            return res.status(400).json({ message: "failure" });
+            console.log("resp from python server", response.status);
+            if (response.status === 200) {
+                return res.status(200).json({ message: "success" });
+            } else {
+                return res.status(400).json({ message: "failure" });
+            }
+        } catch (error) {
+            console.error("Error occurred during GET request:");
         }
 
     } catch (error) {

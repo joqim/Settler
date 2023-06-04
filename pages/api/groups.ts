@@ -5,7 +5,7 @@ import Splitwise from "splitwise";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    console.log("inside groups API")
+    //console.log("inside groups API")
     // Fetch the groups data from your backend or external API
     const groups = await fetchGroupsFromSplitwise();
 
@@ -27,7 +27,7 @@ async function fetchGroupsFromSplitwise() {
   });
 
   let groups = await sw.getGroups();
-  console.log("groups", groups);
+  //console.log("groups", groups);
 
   return groups;
 }
