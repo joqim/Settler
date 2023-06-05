@@ -10,9 +10,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const groups = await fetchGroupsFromSplitwise();
 
     // Return the players data as the response
+    console.log("groups", groups)
     res.status(200).json(groups);
   } catch (error) {
     // Handle any errors that occur during the API call
+    console.log("Unable to fetch groups data")
     res.status(500).json({ error: 'Unable to fetch groups data' });
   }
 }

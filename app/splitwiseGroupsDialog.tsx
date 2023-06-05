@@ -80,7 +80,7 @@ export function GroupDialog({ onSaveChanges }: GroupDialogProps) {
       <DialogTrigger asChild>
         <Button onClick={handleSwitchGroupClick} className="size-lg">Switch group</Button>
       </DialogTrigger>
-      <DialogContent className="sm:min-w-[550px] min-h-[250px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <DialogContent className="absolute left-1/2 top-1/2 min-h-[250px] -translate-x-1/2 -translate-y-1/2 sm:min-w-[550px]">
         <DialogHeader>
           <DialogTitle>Switch group</DialogTitle>
           <DialogDescription>
@@ -100,10 +100,10 @@ export function GroupDialog({ onSaveChanges }: GroupDialogProps) {
             <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="w-[300px] justify-between"
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-[300px] justify-between"
                 >
                 {value
                     ? groups.find((group) => group.value === value)?.label
@@ -119,7 +119,7 @@ export function GroupDialog({ onSaveChanges }: GroupDialogProps) {
                     {groups.map((group) => (
                     <CommandItem
                         key={group.value}
-                        onSelect={(currentValue) => {
+                        onSelect={(currentValue: React.SetStateAction<string>) => {
                         setValue(currentValue === value ? "" : currentValue);
                         setOpen(false);
                         setSelectedGroup(currentValue === value ? "" : group.label);
