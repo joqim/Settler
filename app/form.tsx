@@ -249,7 +249,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                 name="buyin"
                 render={({ field }) => (
                     <FormItem className="ml-10">
-                        <FormLabel>Buy-in's</FormLabel>
+                      <FormLabel>Buy-in&apos;s</FormLabel>
                         <div className="flex">
                             <div>
                                 <FormControl className="w-[200px] p-4">
@@ -258,7 +258,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                                     min="0"
                                     placeholder="Buy-in count"
                                     {...field}
-                                    className="appearance-none no-spin"
+                                    className="no-spin appearance-none"
                                 />
                                 </FormControl>
                                 {index === playerCount[0] - 1 ? (
