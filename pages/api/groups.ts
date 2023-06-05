@@ -23,12 +23,13 @@ async function fetchGroupsFromSplitwise() {
   const CONSUMER_KEY = process.env.CONSUMER_KEY;
   const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
 
+  console.log("sw", CONSUMER_KEY, CONSUMER_SECRET)
+
   const sw = Splitwise({
     consumerKey: CONSUMER_KEY,
     consumerSecret: CONSUMER_SECRET
   });
 
-  console.log("sw", sw, CONSUMER_KEY, CONSUMER_SECRET)
   let groups = await sw.getGroups();
   //console.log("groups", groups);
 
