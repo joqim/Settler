@@ -155,8 +155,8 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
   return (
     <Form {...form}>
     <form className="space-y-10">
-        <div className="flex flex-wrap -mx-4">
-        <div className="w-full sm:w-1/2 px-4">
+        <div className="-mx-4 flex flex-wrap">
+        <div className="w-full px-4 sm:w-1/2">
             <div className="flex flex-col">
             <div className="flex">
                 <FormField
@@ -232,7 +232,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                         <FormControl className="w-[250px] p-4">
                         <Input type="number" min="0" 
                             placeholder="Chips count" {...field} 
-                            className="appearance-none no-spin"
+                            className="no-spin appearance-none"
                         />
                         </FormControl>
                         {index === playerCount[0] - 1 ? (
