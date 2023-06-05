@@ -20,7 +20,16 @@ export default async function authAPI(req: NextApiRequest, res: NextApiResponse)
           // user is authenticated
           const { email, phone } = await passage.user.get(userID);
           const identifier = email ? email : phone; 
-          res.status(200).json({isAuthorized: true, username: identifier, appID});
+
+          const SUPABASE_JWT_SECRET = process.env.SUPABASE_JWT_SECRET;
+
+          res.status(200).json({
+            isAuthorized: true, 
+            username: identifier, 
+            appID, 
+            userID,
+            SUPABASE_JWT_SECRET
+          });
         }
       } catch (error) {
         // authentication failed

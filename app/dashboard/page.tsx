@@ -9,6 +9,7 @@ import { DotWave } from '@uiball/loaders';
 import { useTheme } from 'next-themes';
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
+import { getSupabase } from '../../utils/supabase'
 
 export default function DashboardPage() {
   const [buyIn, setBuyIn] = useState(0);
@@ -47,13 +48,19 @@ export default function DashboardPage() {
       const data = await response.json();
 
       //console.log("data", data)
-      const { isAuthorized, appID, username } = data;
+      const { isAuthorized, appID, username, userID, SUPABASE_JWT_SECRET } = data;
   
       // Handle the response accordingly
       if (isAuthorized) {
         // User is authorized
         //console.log('User is authorized with appID:', appID);
         setUserName(username);
+        //console.log("userId from auth", userID)
+
+        const supabase = getSupabase(userID, SUPABASE_JWT_SECRET)
+        const {data} = await supabase.from('settler').select()
+        
+        console.log("data from settler - supabase", data)
       } else {
         // User is not authorized
         //console.log('User is not authorized with appID:', appID);
@@ -278,6 +285,7 @@ export default function DashboardPage() {
             </Link>
           </div> */}
         </section>
+        
         <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
           <div className="flex items-center">
             <p className={selectedGroup && selectedGroup.length > 0 ? "ml-2 mr-8 text-lg" : ""}>{selectedGroup}</p>
