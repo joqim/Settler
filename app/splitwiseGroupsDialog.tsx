@@ -141,7 +141,7 @@ export function GroupDialog({ onSaveChanges }: GroupDialogProps) {
             </Popover>
         )}
         
-        <DialogFooter>
+        <DialogFooter> 
           <DialogClose asChild>
           <Button onClick={handleDialogSaveChanges}>Save changes</Button>
           </DialogClose>
