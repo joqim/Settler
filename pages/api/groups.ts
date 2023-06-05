@@ -28,6 +28,7 @@ async function fetchGroupsFromSplitwise() {
     consumerSecret: CONSUMER_SECRET
   });
 
+  console.log("sw", sw)
   let groups = await sw.getGroups();
   //console.log("groups", groups);
 
