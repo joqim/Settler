@@ -113,3 +113,8 @@
   --passage-container-background-color: #080414;
   --passage-container-background: #080414;
 }
+
+.psg-otp-single-input-container {
+  /* Your custom styles for OTP input boxes go here */
+  color: #080414;
+}
