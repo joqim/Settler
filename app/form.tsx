@@ -21,7 +21,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { toast } from "@/components/ui/use-toast"
 import {
   Form,
   FormControl,
@@ -64,15 +63,19 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
     defaultValues,
   })
 
-  const preparedMembersArray = members.map((member: { name: any; id: any }) => {
-    const isPlayerSelected = form.watch("player") === member.name.toLowerCase();
-    return {
-      value: member.name.toLowerCase(),
-      label: member.name,
-      identifier: member.id,
-      disabled: isPlayerSelected,
-    };
-  });
+  let preparedMembersArray: unknown = []
+  if(members) {
+    preparedMembersArray = members.map((member: { name: any; id: any }) => {
+      const isPlayerSelected = form.watch("player") === member.name.toLowerCase();
+      return {
+        value: member.name.toLowerCase(),
+        label: member.name,
+        identifier: member.id,
+        disabled: isPlayerSelected,
+      };
+    });
+  }
+  
 
   const handleSelectItem = (value: any) => {
     form.setValue("player", value);

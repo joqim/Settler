@@ -1,16 +1,18 @@
-// pages/api/players.ts
-
 import { NextApiRequest, NextApiResponse } from 'next';
 import Splitwise from "splitwise";
+import axios from "axios"
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     console.log("inside groups API")
+    const oauthToken = req.query.oauth_token as string;
+    const oauthTokenSecret = req.query.oauth_token_secret as string;
+
     // Fetch the groups data from your backend or external API
-    const groups = await fetchGroupsFromSplitwise();
+    const groups = await fetchGroupsFromSplitwise(oauthToken, oauthTokenSecret);
 
     // Return the players data as the response
-    console.log("groups", groups)
+    //console.log("groups", groups)
     res.status(200).json(groups);
   } catch (error) {
     // Handle any errors that occur during the API call
@@ -19,19 +21,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-async function fetchGroupsFromSplitwise() {
-  const CONSUMER_KEY = process.env.CONSUMER_KEY;
-  const CONSUMER_SECRET = process.env.CONSUMER_SECRET;
+async function fetchGroupsFromSplitwise(oauthToken: string, oauthTokenSecret: string) {
 
-  console.log("sw", CONSUMER_KEY, CONSUMER_SECRET)
+  const SPLITWISE_API_CLIENT = "https://splitwise-api-pi.vercel.app";
+  //const SPLITWISE_API_CLIENT = "http://127.0.0.1:5000";
 
-  const sw = Splitwise({
-    consumerKey: CONSUMER_KEY,
-    consumerSecret: CONSUMER_SECRET
-  });
+  const response = await axios.get(`${SPLITWISE_API_CLIENT}/groups?oauth_token=${oauthToken}&oauth_token_secret=${oauthTokenSecret}`);
+  console.log("response from groups", response.data);
 
-  let groups = await sw.getGroups();
-  //console.log("groups", groups);
-
-  return groups;
+  return response.data.groups;
 }

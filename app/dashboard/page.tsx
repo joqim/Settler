@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
+import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { AccountForm } from "@/app/form"
 import { GroupDialog } from "@/app/splitwiseGroupsDialog";
@@ -20,6 +21,9 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [userName, setUserName] = useState("");
   const [splitwiseButtonDisabled, setSplitwiseButtonDisabled] = useState(false);
+  const [accessToken, setAccessToken] = useState("");
+  const [syncSplitDisabled, setSyncSplitDisabled] = useState(false);
+  const [secret, setSecret] = useState("");
 
   const { setTheme, theme } = useTheme();
   if(theme==='system') setTheme('dark');
@@ -27,14 +31,17 @@ export default function DashboardPage() {
   const dotWaveColor = theme === 'dark' ? 'black' : 'white';
 
   // Function to fetch data from the API endpoint
-  const fetchData = async (selectedId: string) => {
+  const fetchPlayersForSelectedGroupId = async (selectedId: string) => {
     //console.log("inside fetch data for ", selectedId)
     try {
       if(selectedId) {
         const params = { groupId: selectedId }
-        const response = await fetch(`/api/players?${new URLSearchParams(params)}`);
+        const oauth_token = localStorage.getItem('oauth_token');
+        const oauth_token_secret = localStorage.getItem('oauth_token_secret');
+
+        const response = await fetch(`/api/players?group_id=${selectedId}&oauth_token=${oauth_token}&oauth_token_secret=${oauth_token_secret}`);
         const data = await response.json();
-        //console.log("members", data); // Process the data as needed
+        console.log("members", data); // Process the data as needed
         setMembersforSelectedGroup(data);
       }
     } catch (error) {
@@ -72,35 +79,66 @@ export default function DashboardPage() {
     }
   }
 
+  async function fetchSplitwiseAccessToken() {
+    const SPLITWISE_API_CLIENT = "https://splitwise-api-pi.vercel.app";
+    //const SPLITWISE_API_CLIENT = "http://127.0.0.1:5000";
+
+    try {
+      const response = await axios.get(`${SPLITWISE_API_CLIENT}/auth_code`);
+      console.log("redirect URI for auth code fetched", response);
+
+      if (response.data && response.data.redirect_url && response.data.secret) {
+        
+        localStorage.setItem('secret', response.data.secret);
+        setSecret(response.data.secret);
+
+        const redirectUrl = response.data.redirect_url;
+        const popupWidth = 600;
+        const popupHeight = 600;
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+        const left = (screenWidth - popupWidth) / 2;
+        const top = (screenHeight - popupHeight) / 2;
+        const windowFeatures = `width=${popupWidth},height=${popupHeight},top=${top},left=${left}`;
+
+        window.open(redirectUrl, '_blank', windowFeatures);
+      }
+    } catch (error) {
+      console.error("Error occurred when fetching access token");
+    }
+  }
+
   useEffect(() => {
+    console.log("inside useEffect");
     require('@passageidentity/passage-elements/passage-auth');
     const fetchDataAndAuthenticate = async () => {
-        try {
-          setLoading(true);
-          await passageAuthentication(); // Assuming passageAuthentication is an async function
-          setLoading(false);
+      try {
+        setLoading(true);
+        await passageAuthentication(); // Assuming passageAuthentication is an async function
+        setLoading(false);
+      } catch (error) {
+        // Handle any errors that occur during passageAuthentication or fetchData
+        setLoading(false); // Set loading to false even if an error occurs
+        console.error(error);
+      }
+    };
 
-        } catch (error) {
-          // Handle any errors that occur during passageAuthentication or fetchData
-          setLoading(false); // Set loading to false even if an error occurs
-          console.error(error);
-        }
-      };
-    
-      fetchDataAndAuthenticate(); // Call the function to fetch data and authenticate when the component mounts
-    
+    fetchDataAndAuthenticate(); // Call the function to fetch data and authenticate when the component mounts
+  
     const clearLocalStorage = () => {
       localStorage.clear();
-    }; 
-    window.addEventListener('beforeunload', clearLocalStorage);
-
-    fetchData(selectedGroupId); // Call the function to fetch data when the component mounts
+    };
   
+    window.addEventListener('beforeunload', clearLocalStorage);
     return () => {
       window.removeEventListener('beforeunload', clearLocalStorage);
     };
   }, []);
-  
+    
+
+  useEffect(()=> {
+    fetchPlayersForSelectedGroupId(selectedGroupId); // Call the function to fetch data when selectedGroupId changes
+  }, [selectedGroupId])
 
   const handleBuyInChange = (value: any) => {
     setBuyIn(value);
@@ -137,7 +175,7 @@ export default function DashboardPage() {
     setSelectedGroupId(id);
 
     //console.log("group id before fetch id", selectedGroupId);
-    fetchData(id);
+    fetchPlayersForSelectedGroupId(id);
   };
 
   const { toast } = useToast();
@@ -181,66 +219,86 @@ export default function DashboardPage() {
       
       preparedMembersArray.push(memberObject);
       //console.log("prep mem array", preparedMembersArray)
-      
-
+    
       if(totalMoneyWalkedAwayWith > 0) {
         totalMoneyPaid += totalMoneyWalkedAwayWith;
         //console.log("totalMoneyPaid", totalMoneyPaid)
       }
     }
-
-    const params = {
-      groupId: selectedGroupId,
-      playersArray: JSON.stringify(preparedMembersArray),
-      totalMoneyPaid: String(totalMoneyPaid),
-    };
     
-    const queryString = new URLSearchParams(params).toString();
-    const url = `/api/splitwise?${queryString}`;
-    
-    const response = await fetch(url);   
-    //console.log("response from python server1", response) 
+    // Retrieve the access token from localStorage
+    const oauth_token = localStorage.getItem('oauth_token') as string;
+    const oauth_token_secret = localStorage.getItem('oauth_token_secret') as string;
+    if(oauth_token && oauth_token_secret) {
+      const params = {
+        groupId: selectedGroupId,
+        playersArray: JSON.stringify(preparedMembersArray),
+        totalMoneyPaid: String(totalMoneyPaid),
+        oauth_token: oauth_token,
+        oauth_token_secret: oauth_token_secret
+      };
+      
+      const queryString = new URLSearchParams(params).toString();
+      const url = `/api/splitwise?${queryString}`;
 
-    const currentDate = new Date();
+      const response = await fetch(url);   
+      //console.log("response from python server1", response)
 
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true
-    };
+      const currentDate = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true
+      };
 
-    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(currentDate);
+      const formattedDate = new Intl.DateTimeFormat("en-US", options).format(currentDate);
 
-    if (response.status === 200) {
-      //console.log("response status is 200");
+      if (response.status === 200) {
+        //console.log("response status is 200");
+        toast({
+          title: "Splitwise activity updated successfully",
+          description: formattedDate
+        });
+        setSplitwiseButtonDisabled(false);
+      }
+
+      //float notification success
+      else if (response.status===400) {
+        toast({
+          title: "Something went wrong.",
+          description: "There was a problem with your request.",
+          action: (
+            <ToastAction altText="Goto page to undo">Undo</ToastAction>
+          )
+        })
+        setSplitwiseButtonDisabled(false);
+      } //float notification error
+      localStorage.clear();
+    } else {
+      //Access token not present, sync with splitwise
       toast({
-        title: "Splitwise activity updated successfully",
-        description: formattedDate
-      });
-      setSplitwiseButtonDisabled(false);
-    }
-
-    //float notification success
-    else if (response.status===400) {
-      toast({
-        title: "Something went wrong.",
-        description: "There was a problem with your request.",
+        title: "Access token not found",
+        description: "Sync Settler with Splitwise to fetch access token",
         action: (
-          <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
+          <ToastAction altText="Goto page to undo">Undo</ToastAction>
         )
       })
-      setSplitwiseButtonDisabled(false);
-    } //float notification error
-    localStorage.clear();
+    }
   }
 
   const handleLogout = async () => {
     setTheme('dark')
     document.cookie = "psg_auth_token=; max-age=0; path=/;";
     window.location.href = "/";    
+  }
+
+  const handleSyncWithSplitwise = async () => {
+    setSyncSplitDisabled(true);
+    await fetchSplitwiseAccessToken();
+    setSyncSplitDisabled(false);
   }
   
   return (
@@ -252,56 +310,41 @@ export default function DashboardPage() {
         <>
           <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
             <div className="flex flex-col items-start gap-2">
-              <div className="flex w-full items-center justify-between">
-                <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
-                  Settler
-                  <br className="hidden sm:inline" />
-                </h1>
-                <Button className="mr-5" onClick={handleLogout}>Logout</Button>
+            <div className="flex w-full items-center justify-between">
+              <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
+                Settler
+                <br className="hidden sm:inline" />
+              </h1>
+              <div className="space-x-2">
+                <Button className="mr-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>Sync with Splitwise</Button>
+                <Button onClick={handleLogout}>Logout</Button>
               </div>
+            </div>
+
               <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
                 No more arguing about who owes who what.
                 <br className="hidden sm:inline" />
                 Built using Splitwise API.
               </p>
             </div>
-
-          {/* <div className="flex gap-4">
-            <Link
-              href={siteConfig.links.docs}
-              target="_blank"
-              rel="noreferrer"
-              className={buttonVariants({ size: "lg" })}
-            >
-              Read article
-            </Link>
-            <Link
-              target="_blank"
-              rel="noreferrer"
-              href={siteConfig.links.github}
-              className={buttonVariants({ variant: "outline", size: "lg" })}
-            >
-              GitHub
-            </Link>
-          </div> */}
-        </section>
+          </section>
         
-        <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-          <div className="flex items-center">
-            <p className={selectedGroup && selectedGroup.length > 0 ? "ml-2 mr-8 text-lg" : ""}>{selectedGroup}</p>
-            <GroupDialog onSaveChanges={handleSaveChanges} />
-          </div>
-          
-          <GlobalDetail 
-            onBuyInValueChange={handleBuyInChange}
-            onPlayerCountValueChange={handlePlayerCountChange}
-          />
-        </section>
+          <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
+            <div className="flex items-center">
+              <p className={selectedGroup && selectedGroup.length > 0 ? "ml-2 mr-8 text-lg" : ""}>{selectedGroup}</p>
+              <GroupDialog onSaveChanges={handleSaveChanges} />
+            </div>
+            
+            <GlobalDetail 
+              onBuyInValueChange={handleBuyInChange}
+              onPlayerCountValueChange={handlePlayerCountChange}
+            />
+          </section>
 
-        <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-          {renderAccountForms()}
-          <Button className="w-40" onClick={handleUpdateSplitwise} disabled={splitwiseButtonDisabled}>Update Splitwise</Button>
-        </section>
+          <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
+            {renderAccountForms()}
+            <Button className="w-40" onClick={handleUpdateSplitwise} disabled={splitwiseButtonDisabled}>Update Splitwise</Button>
+          </section>
         </>
       )}
     </>

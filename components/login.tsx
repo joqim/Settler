@@ -3,6 +3,7 @@ import { useTheme } from 'next-themes';
 import '../styles/globals.css';
 
 const PassageLogin = () => {
+  console.log("inside passage login component")
   const { setTheme, theme } = useTheme();
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 
 export default function LoginPage() {
+  console.log("inside Login Page")
   const [authenticated, setAuthenticationStatus] = useState(false);
   const [loading, setLoading] = useState(true);
 
