@@ -37,7 +37,7 @@ export default async function splitWiseExpenseUpdate(req: NextApiRequest, res: N
                 CONSUMER_SECRET: CONSUMER_SECRET,
                 API_KEY: process.env.SPLITWISE_API_KEY
             };
-            const response = await axios.get(`${SPLITWISE_API_CLIENT}/`, {
+            const response = await axios.get(`${SPLITWISE_API_CLIENT}/update`, {
                 params: payload
             });
 
