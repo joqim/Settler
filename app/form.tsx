@@ -63,7 +63,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
     defaultValues,
   })
 
-  let preparedMembersArray: unknown = []
+  let preparedMembersArray: any = []
   if(members) {
     preparedMembersArray = members.map((member: { name: any; id: any }) => {
       const isPlayerSelected = form.watch("player") === member.name.toLowerCase();
