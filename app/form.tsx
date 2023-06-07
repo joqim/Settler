@@ -89,7 +89,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
 
   const getIdentifier = (playerName: string) => {
     //console.log("playerName in getIdentifier", playerName)
-    const matchingMember = preparedMembersArray.find((item) => item.value === playerName);
+    const matchingMember = preparedMembersArray.find((item: any) => item.value === playerName);
     return matchingMember ? matchingMember.identifier : '';
   };
 
@@ -101,7 +101,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
     const playerToDelete = existingArray.find(
       (item: any) =>
         item.identifier ===
-        preparedMembersArray.find((player) => player.value === watchValues?.player)
+        preparedMembersArray.find((player: any) => player.value === watchValues?.player)
           ?.identifier
     );
   
@@ -183,7 +183,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                             {   
                                 field.value
                                 ? preparedMembersArray.find(
-                                    (player) => player.value === field.value
+                                    (player: any) => player.value === field.value
                                 )?.label
                                 : "Select player"
                             }
@@ -196,7 +196,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                             <CommandInput placeholder="Search player..." />
                             <CommandEmpty>No player found.</CommandEmpty>
                                 <CommandGroup>
-                                {preparedMembersArray.map((player) => (
+                                {preparedMembersArray.map((player: any) => (
                                     <CommandItem
                                         value={player.value}
                                         key={player.value}
