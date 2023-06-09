@@ -11,6 +11,7 @@ import { useTheme } from 'next-themes';
 import { ToastAction } from "@/components/ui/toast"
 import { useToast } from "@/components/ui/use-toast"
 import { getSupabase } from '../../utils/supabase'
+import { Loader2 } from 'lucide-react';
 
 export default function DashboardPage() {
   const [buyIn, setBuyIn] = useState(0);
@@ -286,6 +287,7 @@ export default function DashboardPage() {
           <ToastAction altText="Goto page to undo">Undo</ToastAction>
         )
       })
+      setSplitwiseButtonDisabled(false);
     }
   }
 
@@ -343,7 +345,14 @@ export default function DashboardPage() {
 
           <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
             {renderAccountForms()}
-            <Button className="w-40" onClick={handleUpdateSplitwise} disabled={splitwiseButtonDisabled}>Update Splitwise</Button>
+            {splitwiseButtonDisabled && (<Button className="w-40" disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Please wait
+            </Button>)}
+            {!splitwiseButtonDisabled && (
+              <Button className="w-40" onClick={handleUpdateSplitwise} >Update Splitwise</Button>
+            )}
+            
           </section>
         </>
       )}
