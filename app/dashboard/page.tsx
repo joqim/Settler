@@ -36,7 +36,6 @@ export default function DashboardPage() {
     //console.log("inside fetch data for ", selectedId)
     try {
       if(selectedId) {
-        const params = { groupId: selectedId }
         const oauth_token = sessionStorage.getItem('oauth_token');
         const oauth_token_secret = sessionStorage.getItem('oauth_token_secret');
 

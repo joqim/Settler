@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   const { setTheme, theme } = useTheme();
   if(theme==='system') setTheme('dark');
-  const dotWaveColor = theme === 'dark' ? '#FFFFFF' : '#000000';
+  const dotWaveColor = theme === 'dark' ? 'white' : 'black';
 
   async function passageAuthentication() {
     try {
@@ -62,7 +62,7 @@ export default function LoginPage() {
     <>
       {loading && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-          {loading && <DotWave color='white'/>}
+          {loading && <DotWave color={dotWaveColor}/>}
         </div>
       )}
       {!authenticated && <PassageLogin/>}
