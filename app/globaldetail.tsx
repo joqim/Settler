@@ -98,7 +98,7 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
                                 )}
                             />
                         </div>
-                        <div className={`${!window.matchMedia("(max-width: 767px)").matches ? 'ml-10' : '-ml-40'} sm:mt-4`}>
+                        <div className={`${!window.matchMedia("(max-width: 767px)").matches ? 'ml-10' : '-ml-40 mt-2'} sm:mt-4`}>
                             <FormField
                                 control={form.control}
                                 name="name"
