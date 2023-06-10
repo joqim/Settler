@@ -325,7 +325,7 @@ export default function DashboardPage() {
               <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
                 No more arguing about who owes who what.
                 <br className="hidden sm:inline" />
-                <span className="mt-2 inline-block sm:mt-0">Built using Splitwise API.</span>
+                <span className="mt-2 inline-block sm:ml-2">Built using Splitwise API.</span>
               </p>
 
             </div>
