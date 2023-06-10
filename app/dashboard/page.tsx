@@ -328,9 +328,11 @@ export default function DashboardPage() {
                 No more arguing about who owes who what.
                 <br className="hidden sm:inline" />
                 <span className="inline-block sm:ml-2">
-                  <span className="sm:hidden">&nbsp;</span>Built using Splitwise API.
+                  {!window.matchMedia("(min-width: 640px)").matches && <span>&nbsp;</span>}
+                  Built using Splitwise API.
                 </span>
               </p>
+
             </div>
           </section>
 

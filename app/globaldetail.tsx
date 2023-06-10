@@ -69,66 +69,67 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
 
   return (
     <Form {...form}>
-      <form className="space-y-10">
+    <form className="space-y-10">
         <div className="-mx-4 flex flex-wrap">
-          <div className="w-full px-4 sm:w-1/2">
-            <div className="flex flex-col">
-              <div className="flex flex-col sm:flex-row">
-                <div className="sm:mr-6">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Player count</FormLabel>
-                        <FormControl className="w-[400px] p-2">
-                          <Slider
-                            value={playerCount}
-                            onValueChange={handlePlayerCountChange}
-                            min={0}
-                            max={10}
-                            step={1}
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          Total number of players ({playerCount}).
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            <div className="w-full px-4 sm:w-1/2">
+                <div className="flex flex-col">
+                    <div className="flex flex-col sm:flex-row items-center"> {/* Add 'items-center' class to align items vertically */}
+                        <div className="sm:mr-6">
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Player count</FormLabel>
+                                        <FormControl className="w-[400px] p-2">
+                                            <Slider
+                                                value={playerCount}
+                                                onValueChange={handlePlayerCountChange}
+                                                min={0}
+                                                max={10}
+                                                step={1}
+                                            />
+                                        </FormControl>
+                                        <FormDescription>
+                                            Total number of players ({playerCount}).
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                        <div className="sm:mt-4">
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Buy-in</FormLabel>
+                                        <FormControl className="relative w-[200px] p-4">
+                                            <DollarInput
+                                                type="number"
+                                                min="0"
+                                                placeholder="Buy-in amount"
+                                                value={buyIn}
+                                                onChange={handleBuyInChange}
+                                                className="no-spin appearance-none pl-8"
+                                            />
+                                        </FormControl>
+                                        <FormDescription>
+                                            Buy-in amount decided for the game.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                    </div>
                 </div>
-                <div className="sm: mt-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Buy-in</FormLabel>
-                        <FormControl className="relative w-[200px] p-4">
-                          <DollarInput
-                            type="number"
-                            min="0"
-                            placeholder="Buy-in amount"
-                            value={buyIn}
-                            onChange={handleBuyInChange}
-                            className="no-spin appearance-none pl-8"
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          Buy-in amount decided for the game.
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </form>
-    </Form>
+    </form>
+</Form>
+
 
   )
 }
