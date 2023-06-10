@@ -251,8 +251,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                 control={form.control}
                 name="buyin"
                 render={({ field }) => (
-                    <FormItem className="ml-4">
-                      <FormLabel>Buy-in&apos;s</FormLabel>
+                      <FormItem className={`${!window.matchMedia("(max-width: 767px)").matches ? 'ml-6' : ''}`}>                      <FormLabel>Buy-in&apos;s</FormLabel>
                         <div className="flex">
                             <div>
                                 <FormControl className="w-[200px] p-4">
