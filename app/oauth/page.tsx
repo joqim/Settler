@@ -25,15 +25,19 @@ export default function DashboardPage() {
 
     console.log('Oauth token and verifier exists:', oauthToken, oauthVerifier);
         try {
-            const secret = localStorage.getItem('secret');
+            const secret = sessionStorage.getItem('secret');
 
             if (secret) {
                 const response = await axios.get(`${SPLITWISE_API_CLIENT}/access_token?oauth_token=${oauthToken}&oauth_verifier=${oauthVerifier}&secret=${secret}`);
                 console.log("access token fetched", response);
 
                 if (response.data && response.data.token) {
+                    // Store the values in both local storage and session storage
                     localStorage.setItem('oauth_token', response.data.token['oauth_token']);
+                    sessionStorage.setItem('oauth_token', response.data.token['oauth_token']);
                     localStorage.setItem('oauth_token_secret', response.data.token['oauth_token_secret']);
+                    sessionStorage.setItem('oauth_token_secret', response.data.token['oauth_token_secret']);
+                    
                     window.opener.postMessage('Token updated', window.origin);
                     window.close();
                 }

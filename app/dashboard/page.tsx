@@ -37,8 +37,8 @@ export default function DashboardPage() {
     try {
       if(selectedId) {
         const params = { groupId: selectedId }
-        const oauth_token = localStorage.getItem('oauth_token');
-        const oauth_token_secret = localStorage.getItem('oauth_token_secret');
+        const oauth_token = sessionStorage.getItem('oauth_token');
+        const oauth_token_secret = sessionStorage.getItem('oauth_token_secret');
 
         const response = await fetch(`/api/players?group_id=${selectedId}&oauth_token=${oauth_token}&oauth_token_secret=${oauth_token_secret}`);
         const data = await response.json();
@@ -228,8 +228,8 @@ export default function DashboardPage() {
     }
     
     // Retrieve the access token from localStorage
-    const oauth_token = localStorage.getItem('oauth_token') as string;
-    const oauth_token_secret = localStorage.getItem('oauth_token_secret') as string;
+    const oauth_token = sessionStorage.getItem('oauth_token') as string;
+    const oauth_token_secret = sessionStorage.getItem('oauth_token_secret') as string;
     if(oauth_token && oauth_token_secret) {
       const params = {
         groupId: selectedGroupId,
