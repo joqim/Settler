@@ -191,7 +191,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                         </FormControl>
                       </PopoverTrigger>
                       <PopoverContent
-                        className="w-full p-0 sm:w-[400px]"
+                        className="w-full p-0"
                         style={{ maxHeight: "220px", overflowY: "auto" }}
                       >
                         <Command>
@@ -231,7 +231,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
             </div>
             <div className="w-full sm:w-1/2">
               <div className="flex flex-wrap">
-                <div className="w-full sm:w-[250px]">
+                <div className="w-full sm:w-1/2">
                   <FormField
                     control={form.control}
                     name="chips"
@@ -257,7 +257,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                     )}
                   />
                 </div>
-                <div className="w-full sm:w-[200px]">
+                <div className="w-full sm:w-1/2">
                   <FormField
                     control={form.control}
                     name="buyin"
@@ -283,24 +283,23 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                     )}
                   />
                 </div>
-                <div className="w-full sm:w-auto sm:ml-auto">
-                  <Button
-                    className="my-4 sm:mt-2"
-                    variant="secondary"
-                    type="button"
-                    onClick={handleClearClick}
-                  >
-                    Clear
-                  </Button>
-                </div>
               </div>
             </div>
           </div>
+          <Button
+            className="my-4 sm:mt-2 sm:ml-auto"
+            variant="secondary"
+            type="button"
+            onClick={handleClearClick}
+          >
+            Clear
+          </Button>
         </div>
       </div>
     </div>
   </form>
 </Form>
+
 
 
   )
