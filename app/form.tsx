@@ -227,26 +227,31 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                 )}
                 />
                 <FormField
-                control={form.control}
-                name="chips"
-                render={({ field }) => (
-                    <FormItem className="ml-16">
-                    <FormLabel>Chips</FormLabel>
-                        <FormControl className="w-[250px] p-4">
-                        <Input type="number" min="0" 
-                            placeholder="Chips count" {...field} 
-                            className="no-spin appearance-none"
-                        />
-                        </FormControl>
-                        {index === playerCount[0] - 1 ? (
-                            <FormDescription>
-                                Chips balance left with this player.
-                            </FormDescription>
-                        ) : null}
-                        <FormMessage />
-                    </FormItem>
-                )}
+    control={form.control}
+    name="chips"
+    render={({ field }) => (
+        <FormItem className="ml-16">
+            {window.innerWidth <= 768 && <br />} {/* Add a line break if the viewport width is less than or equal to 768px */}
+            <FormLabel>Chips</FormLabel>
+            <FormControl className="w-[250px] p-4">
+                <Input
+                    type="number"
+                    min="0"
+                    placeholder="Chips count"
+                    {...field}
+                    className="no-spin appearance-none"
                 />
+            </FormControl>
+            {index === playerCount[0] - 1 ? (
+                <FormDescription>
+                    Chips balance left with this player.
+                </FormDescription>
+            ) : null}
+            <FormMessage />
+        </FormItem>
+    )}
+/>
+
                 <FormField
                 control={form.control}
                 name="buyin"
