@@ -25,7 +25,7 @@ export default function DashboardPage() {
 
     console.log('Oauth token and verifier exists:', oauthToken, oauthVerifier);
         try {
-            const secret = sessionStorage.getItem('secret');
+            const secret = localStorage.getItem('secret');
 
             if (secret) {
                 const response = await axios.get(`${SPLITWISE_API_CLIENT}/access_token?oauth_token=${oauthToken}&oauth_verifier=${oauthVerifier}&secret=${secret}`);
