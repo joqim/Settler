@@ -336,7 +336,7 @@ export default function DashboardPage() {
           </section>
 
 
-          <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
+          <section className="container grid items-center gap-6 pb-8 pt-3 md:py-10">
             <div className="flex flex-wrap items-center">
               <p className={selectedGroup && selectedGroup.length > 0 ? "ml-2 mr-8 text-lg" : ""}>{selectedGroup}</p>
               <GroupDialog onSaveChanges={handleSaveChanges} />
