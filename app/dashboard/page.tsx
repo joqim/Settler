@@ -317,7 +317,7 @@ export default function DashboardPage() {
                   <br className="hidden sm:inline" />
                 </h1>
                 <div className="space-x-2">
-                  <Button className="ml-3 mr-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>Sync with Splitwise</Button>
+                  <Button className="mx-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>Sync with Splitwise</Button>
                   <Button onClick={handleLogout}>Logout</Button>
                 </div>
               </div>
@@ -325,8 +325,9 @@ export default function DashboardPage() {
               <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
                 No more arguing about who owes who what.
                 <br className="hidden sm:inline" />
-                Built using Splitwise API.
+                <span className="mt-2 inline-block sm:mt-0">Built using Splitwise API.</span>
               </p>
+
             </div>
           </section>
 

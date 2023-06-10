@@ -69,61 +69,66 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
 
   return (
     <Form {...form}>
-    <form className="space-y-10">
-        <div className="flex flex-wrap -mx-4">
-        <div className="w-full sm:w-1/2 px-4">
+      <form className="space-y-10">
+        <div className="-mx-4 flex flex-wrap">
+          <div className="w-full px-4 sm:w-1/2">
             <div className="flex flex-col">
-            <div className="flex">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ }) => (
-                  <FormItem className="ml-2">
-                  <FormLabel>Player count</FormLabel>
-                    <FormControl className="w-[400px] p-2">
-                    <Slider
-                      value={playerCount}
-                      onValueChange={handlePlayerCountChange}
-                      min={0}
-                      max={10}
-                      step={1}
-                    />
-                    </FormControl>
-                    <FormDescription>
-                      Total number of players ({playerCount}).
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem className="ml-14">
-                    <FormLabel>Buy-in</FormLabel>
-                    <FormControl className="relative w-[200px] p-4">
-                      <DollarInput 
-                        type="number"
-                        min="0"
-                        placeholder="Buy-in amount"
-                        value={buyIn}
-                        onChange={handleBuyInChange}
-                        className="no-spin appearance-none pl-8"  
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Buy-in amount decided for the game.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div className="flex flex-col sm:flex-row">
+                <div className="sm:mr-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Player count</FormLabel>
+                        <FormControl className="w-[400px] p-2">
+                          <Slider
+                            value={playerCount}
+                            onValueChange={handlePlayerCountChange}
+                            min={0}
+                            max={10}
+                            step={1}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Total number of players ({playerCount}).
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Buy-in</FormLabel>
+                        <FormControl className="relative w-[200px] p-4">
+                          <DollarInput
+                            type="number"
+                            min="0"
+                            placeholder="Buy-in amount"
+                            value={buyIn}
+                            onChange={handleBuyInChange}
+                            className="no-spin appearance-none pl-8"
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Buy-in amount decided for the game.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
             </div>
-            </div>
+          </div>
         </div>
-        </div>
-    </form>
+      </form>
     </Form>
+
   )
 }
