@@ -311,18 +311,18 @@ export default function DashboardPage() {
         <>
           <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
             <div className="flex flex-col items-start gap-2">
-            <div className="flex w-full flex-col items-center justify-between sm:flex-row">
-              <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
-                Settler
-                <br className="hidden sm:inline" />
-              </h1>
-              <div className="mt-4 space-x-2 sm:mt-0">
-                <Button className="mx-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>
-                  Sync with Splitwise
-                </Button>
-                <Button onClick={handleLogout}>Logout</Button>
+              <div className="flex w-full flex-col items-start justify-between sm:flex-row">
+                <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
+                  Settler
+                  <br className="hidden sm:inline" />
+                </h1>
+                <div className="mt-4 space-x-2 sm:mt-0">
+                  <Button className="mx-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>
+                    Sync with Splitwise
+                  </Button>
+                  <Button onClick={handleLogout}>Logout</Button>
+                </div>
               </div>
-            </div>
 
               <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
                 No more arguing about who owes who what.
@@ -331,9 +331,9 @@ export default function DashboardPage() {
                   <span className="sm:hidden">&nbsp;</span>Built using Splitwise API.
                 </span>
               </p>
-
             </div>
           </section>
+
 
           <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
             <div className="flex flex-wrap items-center">
