@@ -74,7 +74,7 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
             <div className="w-full px-4 sm:w-1/2">
                 <div className="flex flex-col">
                     <div className="flex flex-col sm:flex-row items-center"> {/* Add 'items-center' class to align items vertically */}
-                        <div className="mr-10">
+                        <div>
                             <FormField
                                 control={form.control}
                                 name="name"
@@ -98,7 +98,7 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
                                 )}
                             />
                         </div>
-                        <div className="sm:mt-4">
+                        <div className="ml-10 sm:mt-4">
                             <FormField
                                 control={form.control}
                                 name="name"

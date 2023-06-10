@@ -326,11 +326,12 @@ export default function DashboardPage() {
 
               <p className="max-w-[700px] text-lg text-muted-foreground">
                 No more arguing about who owes who what.
-                <br />
+                <br className="hidden sm:hidden" /> {/* Hide the <br /> element for the 'sm' breakpoint */}
                 <span className="inline-block">
                   Built using Splitwise API.
                 </span>
               </p>
+
             </div>
           </section>
 
