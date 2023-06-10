@@ -48,8 +48,8 @@ export function GroupDialog({ onSaveChanges }: GroupDialogProps) {
 
   useEffect(() => {
     // Retrieve the access token from localStorage
-    const oauth_token = sessionStorage.getItem('oauth_token') as string;
-    const oauth_token_secret = sessionStorage.getItem('oauth_token_secret') as string;
+    const oauth_token = localStorage.getItem('oauth_token') as string;
+    const oauth_token_secret = localStorage.getItem('oauth_token_secret') as string;
 
     console.log("oauth_token from localstorage", oauth_token)
     if(oauth_token) setOAuthToken(oauth_token);
@@ -70,8 +70,8 @@ export function GroupDialog({ onSaveChanges }: GroupDialogProps) {
       setLoading(true);
 
       // Retrieve the access token from localStorage
-      const oauth_token = sessionStorage.getItem('oauth_token') as string;
-      const oauth_token_secret = sessionStorage.getItem('oauth_token_secret') as string;
+      const oauth_token = localStorage.getItem('oauth_token') as string;
+      const oauth_token_secret = localStorage.getItem('oauth_token_secret') as string;
 
       if(oauth_token) setOAuthToken(oauth_token);
       if(oauth_token_secret) setOAuthTokenSecret(oauth_token_secret)

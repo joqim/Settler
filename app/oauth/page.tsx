@@ -34,10 +34,10 @@ export default function DashboardPage() {
                 if (response.data && response.data.token) {
                     console.log("session", response.data.token)
                     // Store the values in both local storage and session storage
-                    //localStorage.setItem('oauth_token', response.data.token['oauth_token']);
-                    sessionStorage.setItem('oauth_token', response.data.token['oauth_token']);
-                    //localStorage.setItem('oauth_token_secret', response.data.token['oauth_token_secret']);
-                    sessionStorage.setItem('oauth_token_secret', response.data.token['oauth_token_secret']);
+                    localStorage.setItem('oauth_token', response.data.token['oauth_token']);
+                    //sessionStorage.setItem('oauth_token', response.data.token['oauth_token']);
+                    localStorage.setItem('oauth_token_secret', response.data.token['oauth_token_secret']);
+                    //sessionStorage.setItem('oauth_token_secret', response.data.token['oauth_token_secret']);
                     
                     window.opener.postMessage('Token updated', window.origin);
                     window.close();
