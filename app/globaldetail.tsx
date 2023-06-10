@@ -79,7 +79,7 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
                                 control={form.control}
                                 name="name"
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="sm: mt-2">
                                         <FormLabel>Player count</FormLabel>
                                         <FormControl className="w-[400px] p-2">
                                             <Slider
