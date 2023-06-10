@@ -32,6 +32,7 @@ export default function DashboardPage() {
                 console.log("access token fetched", response);
 
                 if (response.data && response.data.token) {
+                    console.log("session", response.data.token)
                     // Store the values in both local storage and session storage
                     //localStorage.setItem('oauth_token', response.data.token['oauth_token']);
                     sessionStorage.setItem('oauth_token', response.data.token['oauth_token']);
