@@ -251,7 +251,7 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                 control={form.control}
                 name="buyin"
                 render={({ field }) => (
-                    <FormItem >
+                    <FormItem className="ml-4">
                       <FormLabel>Buy-in&apos;s</FormLabel>
                         <div className="flex">
                             <div>
