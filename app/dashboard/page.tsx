@@ -311,16 +311,16 @@ export default function DashboardPage() {
         <>
           <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
             <div className="flex flex-col items-start gap-2">
-            <div className="flex w-full items-center justify-between">
-              <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
-                Settler
-                <br className="hidden sm:inline" />
-              </h1>
-              <div className="space-x-2">
-                <Button className="mr-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>Sync with Splitwise</Button>
-                <Button onClick={handleLogout}>Logout</Button>
+              <div className="flex w-full items-center justify-between">
+                <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
+                  Settler
+                  <br className="hidden sm:inline" />
+                </h1>
+                <div className="space-x-2">
+                  <Button className="mr-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>Sync with Splitwise</Button>
+                  <Button onClick={handleLogout}>Logout</Button>
+                </div>
               </div>
-            </div>
 
               <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
                 No more arguing about who owes who what.
@@ -329,14 +329,14 @@ export default function DashboardPage() {
               </p>
             </div>
           </section>
-        
+
           <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-            <div className="flex items-center">
+            <div className="flex flex-wrap items-center">
               <p className={selectedGroup && selectedGroup.length > 0 ? "ml-2 mr-8 text-lg" : ""}>{selectedGroup}</p>
               <GroupDialog onSaveChanges={handleSaveChanges} />
             </div>
-            
-            <GlobalDetail 
+
+            <GlobalDetail
               onBuyInValueChange={handleBuyInChange}
               onPlayerCountValueChange={handlePlayerCountChange}
             />
@@ -344,14 +344,16 @@ export default function DashboardPage() {
 
           <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
             {renderAccountForms()}
-            {splitwiseButtonDisabled && (<Button className="w-40" disabled>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            {splitwiseButtonDisabled && (
+              <Button className="w-40" disabled>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 Please wait
-            </Button>)}
-            {!splitwiseButtonDisabled && (
-              <Button className="w-40" onClick={handleUpdateSplitwise} >Update Splitwise</Button>
+              </Button>
             )}
-            
+            {!splitwiseButtonDisabled && (
+              <Button className="w-40" onClick={handleUpdateSplitwise}>Update Splitwise</Button>
+            )}
+
           </section>
         </>
       )}
