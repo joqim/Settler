@@ -69,11 +69,11 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
 
   return (
     <Form {...form}>
-    <form className="space-y-10">
+    <form className="-mt-4 space-y-10">
         <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4 sm:w-1/2">
                 <div className="flex flex-col">
-                    <div className="flex flex-col sm:flex-row items-center"> {/* Add 'items-center' class to align items vertically */}
+                    <div className="flex flex-col items-center sm:flex-row"> {/* Add 'items-center' class to align items vertically */}
                         <div>
                             <FormField
                                 control={form.control}
@@ -98,7 +98,7 @@ export function GlobalDetail({ onBuyInValueChange, onPlayerCountValueChange }: G
                                 )}
                             />
                         </div>
-                        <div className={`${!window.matchMedia("(max-width: 767px)").matches ? 'ml-10' : '-ml-10'} sm:mt-4`}>
+                        <div className={`${!window.matchMedia("(max-width: 767px)").matches ? 'ml-10' : '-ml-20'} sm:mt-4`}>
                             <FormField
                                 control={form.control}
                                 name="name"
