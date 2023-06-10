@@ -311,21 +311,25 @@ export default function DashboardPage() {
         <>
           <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
             <div className="flex flex-col items-start gap-2">
-              <div className="flex w-full items-center justify-between">
-                <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
-                  Settler
-                  <br className="hidden sm:inline" />
-                </h1>
-                <div className="space-x-2">
-                  <Button className="mx-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>Sync with Splitwise</Button>
-                  <Button onClick={handleLogout}>Logout</Button>
-                </div>
+            <div className="flex w-full flex-col items-center justify-between sm:flex-row">
+              <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
+                Settler
+                <br className="hidden sm:inline" />
+              </h1>
+              <div className="mt-4 space-x-2 sm:mt-0">
+                <Button className="mx-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>
+                  Sync with Splitwise
+                </Button>
+                <Button onClick={handleLogout}>Logout</Button>
               </div>
+            </div>
 
               <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
                 No more arguing about who owes who what.
                 <br className="hidden sm:inline" />
-                <span className="mt-2 inline-block sm:ml-2">Built using Splitwise API.</span>
+                <span className="mt-2 inline-block sm:ml-2">
+                  <span className="sm:hidden">&nbsp;</span>Built using Splitwise API.
+                </span>
               </p>
 
             </div>
