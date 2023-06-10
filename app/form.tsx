@@ -161,102 +161,107 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4 sm:w-1/2">
             <div className="flex flex-col">
-              <div className="flex">
-                <FormField
-                  control={form.control}
-                  name="player"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Player</FormLabel>
-                      <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                        <PopoverTrigger asChild>
-                          <FormControl>
-                            <Button
-                              variant="outline"
-                              role="combobox"
-                              className={cn(
-                                "w-full sm:w-[400px] justify-between",
-                                !field.value && "text-muted-foreground"
-                              )}
-                              disabled={!!field.value} // Disable the button if a value is selected
-                            >
-                              {field.value
-                                ? preparedMembersArray.find(
-                                    (player: any) => player.value === field.value
-                                  )?.label
-                                : "Select player"}
-                              <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                            </Button>
+              <div className="flex flex-wrap">
+                <div className="w-full sm:w-1/2">
+                  <FormField
+                    control={form.control}
+                    name="player"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Player</FormLabel>
+                        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  "w-full justify-between sm:w-[400px]",
+                                  !field.value && "text-muted-foreground"
+                                )}
+                                disabled={!!field.value} // Disable the button if a value is selected
+                              >
+                                {field.value
+                                  ? preparedMembersArray.find(
+                                      (player: any) => player.value === field.value
+                                    )?.label
+                                  : "Select player"}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent
+                            className="w-full p-0 sm:w-[400px]"
+                            style={{ maxHeight: "220px", overflowY: "auto" }}
+                          >
+                            <Command>
+                              <CommandInput placeholder="Search player..." />
+                              <CommandEmpty>No player found.</CommandEmpty>
+                              <CommandGroup>
+                                {preparedMembersArray.map((player: any) => (
+                                  <CommandItem
+                                    value={player.value}
+                                    key={player.value}
+                                    onSelect={handleSelectItem} // Handle item selection
+                                  >
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        player.value === field.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                    {player.label}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        {index === playerCount[0] - 1 ? (
+                          <FormDescription>
+                            Participant actively engaged in the poker match.
+                          </FormDescription>
+                        ) : null}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="w-full sm:w-1/2">
+                  <div className="flex flex-wrap">
+                    <FormField
+                      control={form.control}
+                      name="chips"
+                      render={({ field }) => (
+                        <FormItem className="w-full sm:w-[250px]">
+                          <FormLabel>Chips</FormLabel>
+                          <FormControl className="w-full p-4">
+                            <Input
+                              type="number"
+                              min="0"
+                              placeholder="Chips count"
+                              {...field}
+                              className="no-spin appearance-none"
+                            />
                           </FormControl>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-full sm:w-[400px] p-0" style={{ maxHeight: '220px', overflowY: 'auto' }}>
-                          <Command>
-                            <CommandInput placeholder="Search player..." />
-                            <CommandEmpty>No player found.</CommandEmpty>
-                            <CommandGroup>
-                              {preparedMembersArray.map((player: any) => (
-                                <CommandItem
-                                  value={player.value}
-                                  key={player.value}
-                                  onSelect={handleSelectItem} // Handle item selection
-                                >
-                                  <Check
-                                    className={cn(
-                                      "mr-2 h-4 w-4",
-                                      player.value === field.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                  {player.label}
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                      {index === playerCount[0] - 1 ? (
-                        <FormDescription>
-                          Participant actively engaged in the poker match.
-                        </FormDescription>
-                      ) : null}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="chips"
-                  render={({ field }) => (
-                    <FormItem className="ml-0 sm:ml-16">
-                      <FormLabel>Chips</FormLabel>
-                      <FormControl className="w-full sm:w-[250px] p-4">
-                        <Input
-                          type="number"
-                          min="0"
-                          placeholder="Chips count"
-                          {...field}
-                          className="no-spin appearance-none"
-                        />
-                      </FormControl>
-                      {index === playerCount[0] - 1 ? (
-                        <FormDescription>
-                          Chips balance left with this player.
-                        </FormDescription>
-                      ) : null}
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="buyin"
-                  render={({ field }) => (
-                    <FormItem className="ml-0 sm:ml-10">
-                      <FormLabel>Buy-in&apos;s</FormLabel>
-                      <div className="flex">
-                        <div>
-                          <FormControl className="w-full sm:w-[200px] p-4">
+                          {index === playerCount[0] - 1 ? (
+                            <FormDescription>
+                              Chips balance left with this player.
+                            </FormDescription>
+                          ) : null}
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="buyin"
+                      render={({ field }) => (
+                        <FormItem className="w-full sm:w-[200px]">
+                          <FormLabel>Buy-in&apos;s</FormLabel>
+                          <FormControl className="w-full p-4">
                             <Input
                               type="number"
                               min="0"
@@ -271,15 +276,19 @@ export function AccountForm({ index, playerCount, members }: AccountFormProps) {
                             </FormDescription>
                           ) : null}
                           <FormMessage />
-                        </div>
-
-                        <Button className="ml-2 sm:ml-14" variant="secondary" type="button" onClick={handleClearClick}>
-                          Clear
-                        </Button>
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <Button
+                    className="mt-2 sm:ml-14"
+                    variant="secondary"
+                    type="button"
+                    onClick={handleClearClick}
+                  >
+                    Clear
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

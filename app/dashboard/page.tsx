@@ -317,7 +317,7 @@ export default function DashboardPage() {
                   <br className="hidden sm:inline" />
                 </h1>
                 <div className="space-x-2">
-                  <Button className="mr-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>Sync with Splitwise</Button>
+                  <Button className="ml-3 mr-2" onClick={handleSyncWithSplitwise} disabled={syncSplitDisabled}>Sync with Splitwise</Button>
                   <Button onClick={handleLogout}>Logout</Button>
                 </div>
               </div>
