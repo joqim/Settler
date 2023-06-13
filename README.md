@@ -1,4 +1,6 @@
-Settler (in progress)
+# Settler
 
-//Is third party authentication possible via https://github.com/Dean177/splitwise-node/tree/master
-//Supabase integration with Passage
+Settler is a user intuitive web application built with Next.js and TypeScript, utilizing the powerful Shadcn UI framework. <br/>
+
+It seamlessly integrates with the Splitwise API, enabling superflous creation and updating of expenses. 
+Additionally, Settler implements Passage for secure passkey authentication, ensuring robust and reliable user authentication mechanism.
