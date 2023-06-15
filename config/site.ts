@@ -8,8 +8,8 @@ export const siteConfig = {
 
   ],
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/ui",
-    docs: "https://ui.shadcn.com",
+    twitter: "https://twitter.com/joqim",
+    github: "https://github.com/joqim/settler",
+    docs: "https://github.com/joqim/settler",
   },
 }
